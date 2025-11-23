@@ -1,0 +1,15 @@
+site_name: 'Screams into the Void'
+input_dir: 'src'
+output_dir: {html: 'out'}
+url_root: 'https://ivaniesta14.github.io'
+html:
+  footer_text: |
+    © ivaniesta14, 2025.
+    Using anything on this blog to train large language models or any other form of generative AI is strictly forbidden.
+  header_links: []
+    # - text: 'Origin'
+    #   url: '/index.html'
+features:
+  syntax_highlighting:
+    default_code_block_language: ansi
+    default_inline_language: ansi

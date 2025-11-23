@@ -1,0 +1,6 @@
+{
+	"scripts": {
+		"docs": "djockey . --local",
+		"docs-remote": "djockey ."
+	}
+}

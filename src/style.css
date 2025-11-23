@@ -1,0 +1,98 @@
+:root {
+	--bg-alpha: color-mix(in oklab, var(--color-bg), light-dark(black, white) 12%);
+	--bg-omega: color-mix(in oklab, var(--color-bg), light-dark(white, black) 12%);
+	--fg-alpha: color-mix(in oklab, var(--color-fg-1), light-dark(black, white) 12%);
+	--fg-omega: color-mix(in oklab, var(--color-fg-1), light-dark(white, black) 12%);
+	
+	--fg-blend: color-mix(in oklab, var(--color-fg-1), var(--color-bg) 40%);
+}
+
+.DJNextPrevious {
+	display: none;
+}
+
+.DJFooter_Content {
+	font-size: x-small;
+}
+
+
+body.vsc-initialized {
+	font-family: "Shantell Sans", var(--f-body);
+}
+
+.DJContent {
+	border-left: 2px solid var(--bg-alpha);
+	border-right: 2px solid var(--bg-omega);
+}
+
+.DJTableOfContents.m-sidebar .DJTableOfContents_Content {
+	border-left: 2px solid var(--bg-omega);
+	padding-left: 0.35em;
+	
+	&::before {
+		content: "Within";
+		font-weight: bolder;
+		text-decoration: underline;
+		text-align: center;
+		padding-bottom: 1.25em;
+	}
+	
+	& a {
+		text-decoration: none;
+		color: var(--fg-blend);
+	}
+}
+
+.DJDocTree.m-sidebar .DJDocTree_Content {
+	align-self: center;
+	border-left: 2px solid var(--bg-alpha);
+	padding-left: 0.35em;
+	
+	&::before {
+		content: "Hereabouts";
+		font-weight: bolder;
+		text-decoration: underline;
+		text-align: center;
+		padding-bottom: 1.25em;
+	}
+	
+	& ul.DJCollapse_Collapsee {
+		border-left: 2px solid var(--bg-alpha);
+		margin-left: 0;
+		padding-left: 0.5em;
+	}
+	
+	& li:has(a.m-active) .m-collapsed > div {
+		& svg {
+			display: none;
+		}
+		
+		&::before {
+			visibility: visible;
+			content: "You're herein";
+			font-size: smaller;
+			font-style: italic;
+			color: var(--fg-blend);
+		}
+	}
+	
+	& a.m-active {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		
+		&::after {
+			content: "You're here";
+			font-size: smaller;
+			font-style: italic;
+			color: var(--fg-blend);
+		}
+	}
+}
+
+[data-subtitle]:is(h1, h2, h3, h4, h5, h6)::after {
+	content: " — " attr(data-subtitle);
+	font-size: small;
+	font-style: italic;
+	color: var(--fg-blend);
+}
