@@ -2,5 +2,8 @@
 	"scripts": {
 		"docs": "djockey . --local",
 		"docs-remote": "djockey ."
+	},
+	"dependencies": {
+		"djockey": "^0.2.6"
 	}
 }
