@@ -98,10 +98,8 @@ body.vsc-initialized {
 }
 
 @media (scripting: none) {
-.DJDocTree.m-sidebar .DJDocTree_Content {
-	& li:has(a.m-active) .m-collapsed > div {
-		display: inherit;
-	}
+.DJDocTree.m-sidebar .DJDocTree_Content li .m-collapsed {
+	display: inherit;
 }
 } /* @media (scripting: none) */
 
