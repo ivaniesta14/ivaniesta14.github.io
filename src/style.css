@@ -9,6 +9,11 @@
 	--fg-blend: color-mix(in oklab, var(--color-fg-1), var(--color-bg) 40%);
 }
 
+::selection {
+	background-color: var(--color-fg-1);
+	color: var(--color-bg);
+}
+
 .DJNextPrevious {
 	display: none;
 }
@@ -92,9 +97,25 @@ body.vsc-initialized {
 	}
 }
 
-[data-subtitle]:is(h1, h2, h3, h4, h5, h6)::after {
-	content: " — " attr(data-subtitle);
-	font-size: small;
-	font-style: italic;
-	color: var(--fg-blend);
+@media (scripting: none) {
+.DJDocTree.m-sidebar .DJDocTree_Content {
+	& li:has(a.m-active) .m-collapsed > div {
+		display: inherit;
+	}
+}
+} /* @media (scripting: none) */
+
+[data-subtitle]:is(h1, h2, h3, h4, h5, h6){
+	position: relative;
+	
+	&::after {
+		content: " — " attr(data-subtitle);
+		font-size: small;
+		font-style: italic;
+		color: var(--fg-blend);
+		position: absolute;
+		margin-left: 0.35em;
+		top: 50%;
+		transform: translateY(-50%)
+	}
 }
