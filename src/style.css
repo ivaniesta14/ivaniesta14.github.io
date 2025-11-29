@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css2?family=Fira+Code&family=Shantell+Sans&display=swap);
+
 :root {
 	--bg-alpha: color-mix(in oklab, var(--color-bg), light-dark(black, white) 12%);
 	--bg-omega: color-mix(in oklab, var(--color-bg), light-dark(white, black) 12%);
