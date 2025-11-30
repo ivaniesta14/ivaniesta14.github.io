@@ -7,6 +7,9 @@
 	--fg-omega: color-mix(in oklab, var(--color-fg-1), light-dark(white, black) 12%);
 	
 	--fg-blend: color-mix(in oklab, var(--color-fg-1), var(--color-bg) 40%);
+	
+	--color-fg-link: var(--fg-alpha);
+	--color-fg-link-visited: var(--color-fg-link);
 }
 
 ::selection {
@@ -15,7 +18,66 @@
 }
 
 .DJNextPrevious {
-	display: none;
+	.DJNextPrevious_Label {
+		display: none;
+	}
+	
+	.DJPrevious {
+		padding-top: 1em;
+		border: none;
+		border-right: 2px solid var(--bg-alpha);
+		border-radius: 0;
+		transition: border-right-width 0.3s linear;
+		
+		.DJNextPrevious_Link::before {
+			content: "← Westward";
+		}
+		
+		&:hover {
+			border-right-width: 8px;
+		}
+	}
+	
+	.DJNext {
+		padding-top: 1em;
+		border: none;
+		border-left: 2px solid var(--bg-omega);
+		border-radius: 0;
+		transition: border-left-width 0.3s linear;
+		
+		.DJNextPrevious_Link::before {
+			content: "→ Eastward";
+		}
+		
+		&:hover {
+			border-left-width: 8px;
+		}
+	}
+	
+	.DJNextPrevious_Link {
+		position: relative;
+		padding-top: 0.5em;
+		text-align: center;
+		text-decoration: none;
+		
+		&:hover {
+			text-decoration: underline;
+		}
+		
+		&::before {
+			font-size: var(--fs-tiny);
+			position: absolute;
+			top: -1em;
+			text-decoration: none;
+			width: max-content;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+	
+	a:hover {
+		background-color: inherit;
+	}
 }
 
 .DJFooter_Content {
@@ -50,7 +112,7 @@ body.vsc-initialized {
 	}
 }
 
-.DJDocTree.m-sidebar .DJDocTree_Content {
+.DJDocTree .DJDocTree_Content {
 	align-self: center;
 	border-left: 2px solid var(--bg-alpha);
 	padding-left: 0.35em;
@@ -69,18 +131,16 @@ body.vsc-initialized {
 		padding-left: 0.5em;
 	}
 	
-	& li:has(a.m-active) .m-collapsed > div {
-		& svg {
-			display: none;
-		}
+	& .DJCollapse_Collapser {
+		font-weight: normal;
 		
-		&::before {
-			visibility: visible;
-			content: "You're herein";
-			font-size: smaller;
-			font-style: italic;
-			color: var(--fg-blend);
+		&:hover {
+			background-color: inherit;
 		}
+	}
+	
+	& svg {
+		display: none;
 	}
 	
 	& a.m-active {
@@ -89,21 +149,20 @@ body.vsc-initialized {
 		justify-content: space-between;
 		
 		&::after {
-			content: "You're here";
+			content: "— You're here";
 			font-size: smaller;
 			font-style: italic;
 			color: var(--fg-blend);
+			text-decoration: none;
 		}
 	}
 }
 
-@media (scripting: none) {
-.DJDocTree.m-sidebar .DJDocTree_Content li .m-collapsed {
+.DJDocTree .DJDocTree_Content li .m-collapsed {
 	display: inherit;
 }
-} /* @media (scripting: none) */
 
-[data-subtitle]:is(h1, h2, h3, h4, h5, h6){
+[data-subtitle]:is(h1, h2, h3, h4, h5, h6) {
 	position: relative;
 	
 	&::after {
