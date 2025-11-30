@@ -1,6 +1,126 @@
 ---
-title: Oddities
+title: .class file oddities
+default_inline_language: java
+default_code_block_language: java
 ---
 
-{data-subtitle="A language inside a language"}
 # Java's Class File Oddities
+
+[A language inside a language]{.subtitle}
+
+{tag=aside .note}
+:::
+This page uses Recaf's disassembler's syntax to represent bytecode as text.
+
+:::
+
+## [Boolean fields are integers][JVM booleans] modulo two
+
+Opcodes that read from `boolean`-typed fields and arrays actually push the integer constants `0` if the value is `false` and `1` when it is `true`.
+`boolean` variables behave as though they were `int`s.
+
+Opcodes that write to those fields and arrays expect integer values to be on the stack, and unlike [in C][C bool conversion], interpret [even values as `false` and odd values as `true`][putfield].
+
+[bastore]: https://docs.oracle.com/javase/specs/jvms/se25/html/jvms-6.html#jvms-6.5.bastore
+
+[putfield]: https://docs.oracle.com/javase/specs/jvms/se25/html/jvms-6.html#jvms-6.5.putfield
+
+[C bool conversion]: https://en.cppreference.com/w/c/language/conversion.html#Boolean_conversion
+
+[JVM booleans]: https://docs.oracle.com/javase/specs/jvms/se25/html/jvms-2.html#jvms-2.3.4
+
+As a consequence, the following bytecode snippet returns two and not zero:
+
+```
+iconst_1
+newarray boolean // arr = new boolean[1]
+dup
+iconst_0
+iconst_3
+bastore          // arr[0] = (boolean) 3 aka (3 & 1) aka 1
+iconst_0
+baload           // a = arr[0]
+iconst_3         // b = 3
+isub             // out = a - b
+ireturn          // return out
+```
+
+What's more, it's possible to assign a field and a variable the same value and immediately after read different values!
+
+```
+.super java/lang/Object
+.class super Test {
+	.field field_ Z
+	.method roundTrip ()I {
+		parameters: { this },
+		code: {
+			aload this
+			dup
+			iconst_3
+			dup
+			istore var             // var    = 3
+			putfield Test.field_ Z // field_ = (boolean) 3
+			getfield Test.field_ Z // 1 is read from field_
+			iload var              // 3 is read from var
+			isub
+			ireturn
+		}
+	}
+}
+```
+
+Both CFR and Vineflower agree `var` is an `int`, yet neither has trouble assigning the `int` value `3` to the `boolean` field `field_`!
+
+Making `var` a parameter of type `boolean` rather than a variable doesn't improve the situation for either compiler.
+
+As usual, garbage in, garbage out.
+
+## Boolean negation requires branching
+
+Disassembling the following snippet:
+
+```
+static void negation(boolean arg) {
+	final var negated = !arg;
+}
+```
+
+we get:
+
+```
+.method static negation (Z)V {
+	parameters: { arg },
+	code: {
+	A:	iload arg
+		ifne B         //    >┐ if arg != 0
+		iconst_1       //     │
+		goto C         // >┐  │
+	B:	iconst_0       //  │ <┘
+	C:	istore negated // <┘
+		return
+	}
+}
+```
+
+which uses a branch to calculate `!arg`, as if by `negated = arg != false? false : true`.
+
+It is possible to remove the branch using the identity `!arg == arg ^ true` (which also holds at bytecode level _as far as fields and arrays are concerned_):
+
+```
+.method static negation (Z)V {
+	parameters: { arg },
+	code: {
+		iload arg
+		iconst_1
+		ixor
+		istore negated
+		return
+	}
+}
+```
+
+CFR decompiles the above bytecode into `boolean negated = arg ^ true` as expected. (Procyon thinks `negated` is an `int` instead).
+
+[StackOverflow][SO xor negation] explains this latter form was once used to implement negation, without a clear answer as to why a branch is preferred now other than perhaps JIT optimizations.
+
+[SO xor negation]: https://stackoverflow.com/a/12886900

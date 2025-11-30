@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css2?family=Fira+Code&family=Shantell+Sans&display=swap);
 
-:root {
+:root:root {
 	--bg-alpha: color-mix(in oklab, var(--color-bg), light-dark(black, white) 12%);
 	--bg-omega: color-mix(in oklab, var(--color-bg), light-dark(white, black) 12%);
 	--fg-alpha: color-mix(in oklab, var(--color-fg-1), light-dark(black, white) 12%);
@@ -10,6 +10,27 @@
 	
 	--color-fg-link: var(--fg-alpha);
 	--color-fg-link-visited: var(--color-fg-link);
+	
+	--aside-border-radius: 0;
+}
+
+aside:is(aside) {
+	border: none;
+	border-left: 2px solid transparent;
+	border-right: 2px solid transparent;
+	border-image: linear-gradient(to right, var(--bg-alpha) 0%, var(--bg-omega) 100%);
+	border-image-slice: 1;
+	width: 90%;
+	margin: auto;
+	
+	&::before {
+		color: var(--color-fg-1);
+	}
+	
+	&.note::before {
+		background-color: inherit;
+		font-style: italic;
+	}
 }
 
 ::selection {
@@ -87,6 +108,30 @@
 
 body.vsc-initialized {
 	font-family: "Shantell Sans", var(--f-body);
+
+	tt, code, kbd, samp {
+		font-family: "Fira Code", var(--f-monospace);
+	}
+}
+
+span.shiki, pre.shiki {
+	border-radius: 0px;
+	border: none;
+	tab-size: 4;
+}
+
+article {
+	section section p {
+		text-align: justify;
+		text-indent: 1em hanging;
+	}
+	
+	a {
+		text-decoration: underline dotted;
+		&:hover {
+			text-decoration-style: solid;
+		}
+	}
 }
 
 .DJContent {
@@ -162,17 +207,16 @@ body.vsc-initialized {
 	display: inherit;
 }
 
-[data-subtitle]:is(h1, h2, h3, h4, h5, h6) {
+article :is(h1, h2, h3, h4, h5, h6) {
+	text-align: center;
+}
+
+p:has(.subtitle) {
+	font-size: small;
+	font-style: italic;
+	color: var(--fg-blend);
 	position: relative;
-	
-	&::after {
-		content: " — " attr(data-subtitle);
-		font-size: small;
-		font-style: italic;
-		color: var(--fg-blend);
-		position: absolute;
-		margin-left: 0.35em;
-		top: 50%;
-		transform: translateY(-50%)
-	}
+	top: -3em;
+	text-align: center;
+	margin-bottom: -1.5em;
 }
