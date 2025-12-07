@@ -14,6 +14,43 @@
 	--aside-border-radius: 0;
 }
 
+@media (max-width: 970px) {
+:root:root {
+	--content-max-width: 100%;
+}
+}
+
+.DJHeader {
+	position: static;
+	background-color: var(--bg-omega);
+
+	& .DJHeader_Content {
+		border-bottom: none;
+	}
+	
+	& .DJTableOfContents {
+		background-color: color-mix(in oklab, var(--bg-omega), var(--color-bg) 50%);
+		border-bottom: none;
+		
+		& summary {
+			font-size: 0px;
+			
+			&::marker {
+				font-size: var(--fs-small);
+			}
+			
+			&::before {
+				content: "Within";
+				font-size: var(--fs-small);
+			}
+		}
+	}
+	
+	& .DJOpenSearchButton {
+		display: none;
+	}
+}
+
 aside:is(aside) {
 	border: none;
 	border-left: 2px solid transparent;
@@ -103,8 +140,13 @@ aside:is(aside) {
 
 .DJFooter_Content {
 	font-size: x-small;
+	border-top: none;
+	background-color: var(--bg-alpha);
 }
 
+main {
+	margin-top: var(--ml);
+}
 
 body.vsc-initialized {
 	font-family: "Shantell Sans", var(--f-body);
@@ -196,7 +238,6 @@ article {
 }
 
 .DJDocTree .DJDocTree_Content {
-	align-self: center;
 	border-left: 2px solid var(--bg-alpha);
 	padding-left: 0.35em;
 	
@@ -243,6 +284,10 @@ article {
 
 .DJDocTree .DJDocTree_Content li .m-collapsed {
 	display: inherit;
+}
+
+.DJDocTree.m-sidebar .DJDocTree_Content, .DJTableOfContents.m-sidebar .DJTableOfContents_Content {
+	top: var(--mm);
 }
 
 article :is(h1, h2, h3, h4, h5, h6) {
