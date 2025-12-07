@@ -14,7 +14,7 @@ This page uses Recaf's disassembler's syntax to represent bytecode as text.
 
 :::
 
-## [Boolean fields are integers][JVM booleans] modulo two
+## [Boolean fields are ints][JVM booleans] modulo two
 
 Opcodes that read from `boolean`-typed fields and arrays actually push the integer constants `0` if the value is `false` and `1` when it is `true`.
 `boolean` variables behave as though they were `int`s.
@@ -29,55 +29,48 @@ Opcodes that write to those fields and arrays expect integer values to be on the
 
 [JVM booleans]: https://docs.oracle.com/javase/specs/jvms/se25/html/jvms-2.html#jvms-2.3.4
 
-As a consequence, the following bytecode snippet returns two and not zero:
-
-```
-iconst_1
-newarray boolean // arr = new boolean[1]
-dup
-iconst_0
-iconst_3
-bastore          // arr[0] = (boolean) 3 aka (3 & 1) aka 1
-iconst_0
-baload           // a = arr[0]
-iconst_3         // b = 3
-isub             // out = a - b
-ireturn          // return out
-```
-
-What's more, it's possible to assign a field and a variable the same value and immediately after read different values!
+This makes it possible to assign the same value to a field and a variable and immediately after read different values.
+The following disassembled `class` prints `-2` and not `0`:
 
 ```
 .super java/lang/Object
 .class super Test {
-	.field field_ Z
-	.method roundTrip ()I {
-		parameters: { this },
+	.field field Z
+	.method public static main ([Ljava/lang/String;)V {
+		parameters: { _ },
 		code: {
-			aload this
-			dup
+			getstatic java/lang/System.out Ljava/io/PrintStream;
 			iconst_3
 			dup
-			istore var             // var    = 3
-			putfield Test.field_ Z // field_ = (boolean) 3
-			getfield Test.field_ Z // 1 is read from field_
+			istore var             // var   = 3
+			putstatic Test.field Z // field = (boolean) 3
+			getstatic Test.field Z // 1 is read from field
 			iload var              // 3 is read from var
 			isub
-			ireturn
+			invokevirtual java/io/PrintStream.println (I)V
+			return
 		}
 	}
 }
 ```
 
-Both CFR and Vineflower agree `var` is an `int`, yet neither has trouble assigning the `int` value `3` to the `boolean` field `field_`!
+After decompiling the reassembled code both CFR and Vineflower agree `var` is an `int`.
+They both also agree on there being no issue assigning `field` the `int` value `3` or doing math on what should be `boolean`s.
 
-Making `var` a parameter of type `boolean` rather than a variable doesn't improve the situation for either compiler.
+While Procyon properly decompiles the `boolean` subtraction, it makes a mess of the implicit `boolean`-to-`int` conversions and says `var` can only be `0` or `1`, which is clearly incorrect.
 
-As usual, garbage in, garbage out.
+Note the signature used for the method call: if it were `(Z)V` (that is, `println(boolean)`), `true` would be output to the console instead.
+Following the call stack in this case execution would reach [`String.valueOf(boolean)`][String.valueOf(boolean)], which almost certainly uses `if_icmpne` (branch if non-zero) to implement its ternary operator.
+[JLS §4.2.5][] can be interpreted as allowing this despite contradicting the behavior of `bastore` and friends.
+
+[String.valueOf(boolean)]: https://github.com/openjdk/jdk/blob/5f083abafc7abfaa46ddd053668cdfbfd2ad8a87/src/java.base/share/classes/java/lang/String.java#L4900
+
+[JLS §4.2.5]: https://docs.oracle.com/javase/specs/jls/se25/html/jls-4.html#jls-4.2.5
+
 
 ## Boolean negation requires branching
 
-Disassembling the following snippet:
+Disassembling the following method:
 
 ```
 static void negation(boolean arg) {
@@ -119,8 +112,12 @@ It is possible to remove the branch using the identity `!arg == arg ^ true` (whi
 }
 ```
 
-CFR decompiles the above bytecode into `boolean negated = arg ^ true` as expected. (Procyon thinks `negated` is an `int` instead).
+CFR decompiles the above bytecode into `boolean negated = arg ^ true` as expected.
+Vineflower and Procyon think `negated` is an `int` instead; the latter shows the `boolean`-to-`int` conversion explicitly, as before.
 
-[StackOverflow][SO xor negation] explains this latter form was once used to implement negation, without a clear answer as to why a branch is preferred now other than perhaps JIT optimizations.
+[StackOverflow][SO xor negation] explains bitwise xor was indeed once used to implement negation.
+As mentioned in the previous section, [JLS §4.2.5][] might be the reason behind the change to branch-based negation, although considering [its text comes from the very first JLS][JLS 1 §4.2.5] it is unclear why a branch wasn't used in the first place.
 
 [SO xor negation]: https://stackoverflow.com/a/12886900
+
+[JLS 1 §4.2.5]: https://titanium.cs.berkeley.edu/doc/java-langspec-1.0/4.doc.html#11527
