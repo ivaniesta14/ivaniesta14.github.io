@@ -1,8 +1,8 @@
-@import url(https://fonts.googleapis.com/css2?family=Fira+Code&family=Shantell+Sans&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Fira+Code&family=Shantell+Sans&display=block);
 
 :root:root {
 	--bg-alpha: color-mix(in oklab, var(--color-bg), light-dark(black, white) 12%);
-	--bg-omega: color-mix(in oklab, var(--color-bg), light-dark(white, black) 12%);
+	--bg-omega: color-mix(in oklab, var(--color-bg), light-dark(black, black) 12%); /* in light mode, bg + white ≃ white */
 	--fg-alpha: color-mix(in oklab, var(--color-fg-1), light-dark(black, white) 12%);
 	--fg-omega: color-mix(in oklab, var(--color-fg-1), light-dark(white, black) 12%);
 	
@@ -118,10 +118,44 @@ span.shiki, pre.shiki {
 	border-radius: 0px;
 	border: none;
 	tab-size: 4;
+	
+	background-color: inherit !important; /* shiki also uses !important */
+	& * {
+		background-color: inherit !important; /* shiki also uses !important */
+	}
+}
+
+pre.shiki {
+	border-left: 2px solid var(--bg-alpha);
+	border-right: 2px solid var(--bg-omega);
+	overflow-x: auto;
+	
+	&::after {
+		content: "";
+		display: block;
+		position: relative;
+		top: 1ex;
+		left: -1ex;
+		width: 10%;
+		height: 2px;
+		background-color: var(--bg-alpha);
+	}
+	
+	&::before {
+		content: "";
+		display: block;
+		position: relative;
+		top: calc(-1ex + 0.5px);
+		left: 90%;
+		width: 10%;
+		height: 2px;
+		background-color: var(--bg-omega);
+		transform: translateX(1ex);
+	}
 }
 
 article {
-	section section p {
+	p {
 		text-align: justify;
 		text-indent: 1em hanging;
 	}
@@ -150,10 +184,14 @@ article {
 		text-align: center;
 		padding-bottom: 1.25em;
 	}
+}
+
+.DJTableOfContents_Content a {
+	text-decoration: none;
+	color: var(--fg-blend);
 	
-	& a {
-		text-decoration: none;
-		color: var(--fg-blend);
+	&:hover {
+		text-decoration: underline;
 	}
 }
 
