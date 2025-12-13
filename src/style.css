@@ -214,13 +214,7 @@ article {
 	}
 }
 
-.DJContent {
-	border-left: 2px solid var(--bg-alpha);
-	border-right: 2px solid var(--bg-omega);
-}
-
 .DJTableOfContents.m-sidebar .DJTableOfContents_Content {
-	border-left: 2px solid var(--bg-omega);
 	padding-left: 0.35em;
 	
 	&::before {
@@ -242,7 +236,6 @@ article {
 }
 
 .DJDocTree .DJDocTree_Content {
-	border-left: 2px solid var(--bg-alpha);
 	padding-left: 0.35em;
 	
 	&::before {
