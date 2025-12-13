@@ -202,6 +202,10 @@ article {
 		text-indent: 1em hanging;
 	}
 	
+	li {
+		text-align: justify;
+	}
+	
 	a {
 		text-decoration: underline dotted;
 		&:hover {
