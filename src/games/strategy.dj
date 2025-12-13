@@ -1,0 +1,73 @@
+---
+title: RPG & Strategy
+---
+
+# RPG and Strategy Games Review
+
+[Tactics or strategies?]{.subtitle}
+
+{tag=aside .note}
+:::
+Reviews assume some familiarity with the games described and/or mentioned, and might not accurately represent the author's opinion on the games mentioned.
+Criticising a game does not imply disliking it.
+
+:::
+
+In reverse chronological order (most recently played first).
+
+{% The [Divinity: Original Sin]{tag=cite series, including [Baldur's Gate 3]{tag=cite, are omitted. %}
+
+## Chained Echoes
+
+- Overall Opinion: recommended, *7*{~/10~}
+- Status: *Dropped*; combat got stale, story not that appealing
+- Played: for 18h, on controller.
+- Mostly played at difficulty: High aggressiveness; High enemy stats
+- Difficulty: [Challenging [(]{tag=rp}[4/5]{tag=rt}[)]{tag=rp}]{tag=ruby}
+- Combat: [Final Fantasy-like[(]{tag=rp}[Party-based, no in-combat movement]{tag=rt}[)]{tag=rp}]{tag=ruby}, initiative-based, no permadeath
+
+Fails the in-combat revival test: units revived in combat are very often knocked down again before they can act or be healed.
+
+Enemies have moderate/strong AoE attacks quite often.
+They attack substantially more often than PCs.
+
+Boss encounters sometimes come out of nowhere. Save often.
+
+In general, descriptions aren't clear enough:
+
+- Skills use abstract "power" multipliers instead of their actual/base damage/healing amounts.
+- Status effects have no descriptions and in some cases unclear names: "Heavy", "Dry", and "Wet" increase Earth, Water, and Wind damage, respectively.
+(What's wrong with calling it "Earth/Water/Wind Vulnerability"?)
+- Staggered has no reminder and doesn't prevent (attempting to) take actions, wasting turns.
+
+Regarding overdrive/overheat:
+
+- All enemy actions increase overdrive/overheat, including non-offensive ones such as healing (consistent but nonsensical).
+- Randomly deciding which skill type reduces heat can result in getting stuck in overheat for many turns.
+- Defending does not decrease the overheat marker enough to be useful.
+
+Regarding switching out:
+
+- (De)buffs other than Staggered are preserved when switching out mid-combat.
+- Stat alterations aren't shown on the switch out preview.
+
+In combat, the Start button does nothing and controls aren't shown except for Ultra move.
+Good luck surrendering if a non-escapable combat is going poorly.
+
+Crystal merging is just too complex a mechanic and is only explained once^?^.
+
+The equipment screens show items equipped on absent units (including those from the prologue which don't join until much later) and empty item categories.
+
+{% ## Triangle Strategy %}
+
+{% ## Dream Tactics %}
+
+{% ## Fae Tactics %}
+
+{% ## Dark Deity %}
+
+{% ## Ara Fell %}
+
+{% ## Symphony of War %}
+
+{% ## Fell Seal: Arbiter's Mark %}
