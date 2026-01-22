@@ -8,6 +8,9 @@
 	
 	--fg-blend: color-mix(in oklab, var(--color-fg-1), var(--color-bg) 40%);
 	
+	--bg-alpha-half: color-mix(in oklab, var(--color-bg), light-dark(black, white) 6%);
+	--fg-omega-half: color-mix(in oklab, var(--color-fg-1), light-dark(black, white) 6%);
+	
 	--color-fg-link: var(--fg-alpha);
 	--color-fg-link-visited: var(--color-fg-link);
 	
@@ -299,4 +302,50 @@ p:has(.subtitle) {
 	top: -3em;
 	text-align: center;
 	margin-bottom: -1.5em;
+}
+
+
+table.grid {
+	width: 33%;
+	margin-left: auto;
+	margin-right: auto;
+	table-layout: fixed;
+	border: 1px solid var(--fg-blend);
+	
+	td {
+		border-bottom: unset;
+		text-align: center;
+		font-size: larger;
+		width:  var(--d-xlarge);
+		height: var(--d-xlarge);
+	}
+	
+	tr:nth-child(odd) {
+		td:nth-child(odd) {
+			&:has(.fill) {
+				background: var(--fg-omega);
+			}
+		}
+		td:nth-child(even) {
+			background: var(--bg-alpha-half);
+			&:has(.fill) {
+				background: var(--fg-omega-half);
+			}
+		}
+		
+	}
+	tr:nth-child(even) {
+		td:nth-child(odd) {
+			background: var(--bg-alpha-half);
+			&:has(.fill) {
+				background: var(--fg-omega-half);
+			}
+		}
+		td:nth-child(even) {
+			background: var(--bg-alpha);
+			&:has(.fill) {
+				background: var(--fg-omega);
+			}
+		}
+	}
 }

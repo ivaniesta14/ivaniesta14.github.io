@@ -1,0 +1,174 @@
+---
+title: Symmetric Theorem
+---
+
+# The Symmetric Puzzle Theorem
+
+[_The proof is left as an exercise to the reader._]{.subtitle}
+
+{tag=noscript}
+::::
+
+{tag=aside .note}
+:::
+This page needs JavaScript, which is seemingly disabled, to display all content.
+
+:::
+
+::::
+
+## Statement
+
+If a puzzle has a unique solution and its rules allow for a given kind of symmetry, its solution also exhibits that symmetry.
+
+### Example
+
+{.tab-group}
+:::::
+#### Puzzle
+
+::::
+
+{.grid}
+|--|--|--|
+|5|||
+||||
+|||1|
+
+
+{tag=details}
+:::
+{tag=summary}
+Nurikabe rules apply
+
+- Cells are either shaded or unshaded.
+- Each numbered cell is in a different region of unshaded cells that has size equal to that number.
+- Shaded cells are orthogonally connected.
+- No two-by-two region is fully shaded.
+:::
+
+::::
+
+#### Solution
+
+:::
+
+{.grid}
+|--|--|--|
+|5|·|·|
+|·|[]{.fill}|[]{.fill}|
+|·|[]{.fill}|1|
+
+:::
+
+:::::
+
+
+Given that the clues in the grid are symmetric (across the falling diagonal), it is possible to infer that the shaded cells are also symmetric… but only if the solution is unique to begin with!
+
+## Corollary
+
+If a puzzle doesn't have a unique solution but its rules allow for a given kind of symmetry, that symmetry transforms one solution into another.
+
+{% In particular, the number of solutions is a multiple of the size of each symmetry group. %}
+
+
+### Example
+
+{.tab-group}
+:::::
+#### Puzzle
+
+::::
+
+{.grid}
+|--|--|--|
+|4|||
+||||
+|||1|
+
+
+{tag=details}
+:::
+{tag=summary}
+Nurikabe rules apply
+
+- Cells are either shaded or unshaded.
+- Each numbered cell is in a different region of unshaded cells that has size equal to that number.
+- Shaded cells are orthogonally connected.
+- No two-by-two region is fully shaded.
+:::
+
+::::
+
+This is the same puzzle as before, with 5 replaced by 4
+
+#### Solution 1
+
+:::
+
+{.grid}
+|--|--|--|
+|4|·|[]{.fill}|
+|·|[]{.fill}|[]{.fill}|
+|·|[]{.fill}|1|
+
+:::
+
+#### Solution 2
+
+:::
+
+{.grid}
+|--|--|--|
+|4|·|·|
+|·|[]{.fill}|[]{.fill}|
+|[]{.fill}|[]{.fill}|1|
+
+:::
+
+:::::
+
+
+Note that this corollary does not imply that all solutions can be found by applying symmetries to other solutions, as the following example shows.
+Left-right symmetry transforms the given solution into itself.
+
+{.tab-group}
+:::::
+#### Puzzle
+
+::::
+
+{.grid}
+|--|--|--|
+||5||
+||||
+||||
+
+
+{tag=details}
+:::
+{tag=summary}
+Nurikabe rules apply
+
+- Cells are either shaded or unshaded.
+- Each numbered cell is in a different region of unshaded cells that has size equal to that number.
+- Shaded cells are orthogonally connected.
+- No two-by-two region is fully shaded.
+:::
+
+::::
+
+#### Sample Solution
+
+:::
+
+{.grid}
+|--|--|--|
+|·|5|·|
+|·|[]{.fill}|·|
+|[]{.fill}|[]{.fill}|[]{.fill}|
+
+:::
+
+:::::
