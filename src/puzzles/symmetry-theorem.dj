@@ -130,8 +130,9 @@ This is the same puzzle as before, with 5 replaced by 4
 :::::
 
 
-Note that this corollary does not imply that all solutions can be found by applying symmetries to other solutions, as the following example shows.
-Left-right symmetry transforms the given solution into itself.
+Note that this corollary does not imply that all solutions can be found by applying symmetries to other solutions.
+
+It is not difficult to find the only solution of the following puzzle that left-right symmetry transforms into itself.
 
 {.tab-group}
 :::::
