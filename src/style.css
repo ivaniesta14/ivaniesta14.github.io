@@ -290,6 +290,10 @@ article {
 	top: var(--mm);
 }
 
+div.dj-tab-group-tabs {
+	justify-content: center;
+}
+
 article :is(h1, h2, h3, h4, h5, h6) {
 	text-align: center;
 }
